@@ -1,0 +1,18 @@
+{
+  "name": "wasm-pack-play",
+  "type": "module",
+  "collaborators": [
+    "zhenwu.li <zhenwu.li@pixocial.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "wasm_pack_play_bg.wasm",
+    "wasm_pack_play.js",
+    "wasm_pack_play.d.ts"
+  ],
+  "main": "wasm_pack_play.js",
+  "types": "wasm_pack_play.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

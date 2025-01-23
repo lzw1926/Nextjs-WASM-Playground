@@ -3,22 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "panda codegen",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "PORT=3001 next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "eventemitter3": "^5.0.1",
+    "jszip": "^3.10.1",
+    "mediainfo.js": "^0.3.4",
+    "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.15"
+    "stats.js": "^0.17.0",
+    "wasm-pack-play": "link:./lib/wasm-pack-play"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@pandacss/dev": "^0.46.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/stats.js": "^0.17.3",
     "eslint": "^8",
-    "eslint-config-next": "14.2.15"
+    "eslint-config-next": "14.2.15",
+    "typescript": "^5"
   }
 }

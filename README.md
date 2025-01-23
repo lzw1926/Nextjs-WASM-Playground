@@ -1,40 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js + WASM
 
-## Getting Started
+## worker 相对主线程受限的地方
 
-First, run the development server:
+- 不能直接操作 DOM
+- 不能使用 Image 对象
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## WASM 碰到的问题
+- 找不到 GLctx https://emscripten.org/docs/api_reference/html5.h.html?#c.EmscriptenWebGLContextAttributes.renderViaOffscreenBackBuffer
+  https://github.com/emscripten-core/emscripten/issues/9217#issuecomment-524246061
+- nextjs 编译时对 typeof window 的特殊处理导致 emscripten wasm 的胶水代码在 web worker 中报错
+  https://github.com/vercel/next.js/discussions/39605
+  https://github.com/vercel/next.js/issues/62256
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## References
+- https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers
+- https://developer.mozilla.org/en-US/docs/Web/API/DedicatedWorkerGlobalScope/requestAnimationFrame
+- https://rustwasm.github.io/wasm-bindgen/contributing/design/exporting-rust-struct.html
+- https://github.com/seanmonstar/reqwest
+- https://developer.chrome.com/blog/hotpath-with-wasm?hl=zh-cn
+- [emscripten 编译配置](https://emscripten.org/docs/tools_reference/settings_reference.html#proxy-to-worker)
+- [emscripten html API](https://emscripten.org/docs/api_reference/html5.h.html)
+- [emscripten embind](https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html#built-in-type-conversions)
+- https://github.com/mpadge/wasm-next
+- https://stackoverflow.com/questions/76775327/create-htmlimageelement-in-web-worker
+- https://www.nalgebra.org/docs/user_guide/wasm_and_embedded_targets
